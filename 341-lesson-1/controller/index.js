@@ -62,6 +62,7 @@ const updateDoc = async (req, res, next) => {
     );
   console.log(result.matchedCount);
   console.log(result.modifiedCount);
+  return res.json(result);
 };
 
 module.exports = {
