@@ -49,38 +49,21 @@ const getAllCollections = async (req, res, next) => {
 
   const result = await cursor.toArray();
 
-  // result.forEach((element) => {
-  //   console.log(
-  //     element.name,
-  //     element.bedrooms,
-  //     element.bathrooms,
-  //     element.last_review
-  //   );
-  // });
-  res.setHeader('Content-Type', 'application/json');
   res.status(200).json(result);
 };
 
 const getContacts = async (req, res, next) => {
-  const cursor = await mongodb
-    .getDb()
-    .db('contacts')
-    .collection('contact1')
-    .find();
+  const cursor = await mongodb.getDb().db().collection('contact1').find();
   const result = await cursor.toArray();
-  // res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Content-Type', 'application/json');
   res.status(200).json(result);
 };
 
 const getContactById = async (req, res, next) => {
   const result = await mongodb
     .getDb()
-    .db('contacts')
+    .db()
     .collection('contact1')
     .findOne({ _id: ObjectID(req.params.id) });
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Content-Type', 'application/json');
   res.json(result);
 };
 
