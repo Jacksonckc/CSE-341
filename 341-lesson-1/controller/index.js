@@ -70,8 +70,8 @@ const getContacts = async (req, res, next) => {
   const cursor = await mongodb.getDb().db().collection('contact1').find();
   const result = await cursor.toArray();
   res.setHeader('Access-Control-Allow-Origin', '*');
-  // res.status(200).json(result);
-  res.send(result);
+  res.setHeader('Content-Type', 'application/json');
+  res.status(200).json(result);
 };
 
 const getContactById = async (req, res, next) => {
@@ -81,8 +81,8 @@ const getContactById = async (req, res, next) => {
     .collection('contact1')
     .findOne({ _id: ObjectID(req.params.id) });
   res.setHeader('Access-Control-Allow-Origin', '*');
-  // res.json(result);
-  res.send(result);
+  res.setHeader('Content-Type', 'application/json');
+  res.json(result);
 };
 
 module.exports = {
