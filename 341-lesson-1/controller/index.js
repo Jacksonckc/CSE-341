@@ -9,7 +9,7 @@ const getAnotherName = (req, res) => {
   res.send('Jackson Chan');
 };
 
-const getMongoData = async (req, res, next) => {
+const getMongoData = async (req, res) => {
   const result = await mongodb.getDb().db('db1').collection('col1').find();
   result.toArray().then((lists) => {
     res.setHeader('Content-Type', 'application/json');
@@ -17,32 +17,29 @@ const getMongoData = async (req, res, next) => {
   });
 };
 
-const updateDoc = async (req, res, next) => {
+const updateDoc = async (req, res) => {
   const result = await mongodb
     .getDb()
     .db('sample_airbnb')
     .collection('listingsAndReviews')
-    .updateOne(
-      { name: 'Modern Spacious 1 Bedroom Loft' },
-      { $set: { bedrooms: 90 } }
-    );
+    .updateOne({ name: 'Modern Spacious 1 Bedroom Loft' }, { $set: { bedrooms: 90 } });
   console.log(result.matchedCount);
   console.log(result.modifiedCount);
   return res.json(result);
 };
 
-const getAllCollections = async (req, res, next) => {
+const getAllCollections = async (req, res) => {
   const cursor = await mongodb
     .getDb()
     .db('sample_airbnb')
     .collection('listingsAndReviews')
     .find({
       bedrooms: {
-        $gte: 6,
+        $gte: 6
       },
       bathrooms: {
-        $gte: 5,
-      },
+        $gte: 5
+      }
     })
     .sort({ last_review: -1 })
     .limit(3);
@@ -52,22 +49,44 @@ const getAllCollections = async (req, res, next) => {
   res.status(200).json(result);
 };
 
-const getContacts = async (req, res, next) => {
-  const cursor = await mongodb
-    .getDb()
-    .db('contacts')
-    .collection('contact1')
-    .find();
+const getContacts = async (req, res) => {
+  const cursor = await mongodb.getDb().db('contacts').collection('contact1').find();
   const result = await cursor.toArray();
   res.status(200).json(result);
 };
 
-const getContactById = async (req, res, next) => {
+const getContactById = async (req, res) => {
   const result = await mongodb
     .getDb()
     .db('contacts')
     .collection('contact1')
     .findOne({ _id: ObjectID(req.params.id) });
+
+  res.json(result);
+};
+
+const createNewContact = async (req, res) => {
+  const result = await mongodb.getDb().db('contacts').collection('contact1').insertOne(req.body);
+
+  res.json(result);
+};
+
+const updateContact = async (req, res) => {
+  const result = await mongodb
+    .getDb()
+    .db('contacts')
+    .collection('contact1')
+    .updateOne({ _id: ObjectID(req.params.id) }, { $set: req.body });
+
+  res.json(result);
+};
+
+const removeContact = async (req, res) => {
+  const result = await mongodb
+    .getDb()
+    .db('contacts')
+    .collection('contact1')
+    .deleteOne({ _id: ObjectID(req.params.id) });
 
   res.json(result);
 };
@@ -80,4 +99,7 @@ module.exports = {
   updateDoc,
   getContacts,
   getContactById,
+  createNewContact,
+  updateContact,
+  removeContact
 };
