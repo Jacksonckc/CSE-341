@@ -1,0 +1,16 @@
+GET http://localhost:3000
+###
+GET http://localhost:3000/contacts
+###
+POST http://localhost:3000/contacts
+Content-Type: application/json
+
+{ "name" : "Joel" }
+###
+PUT http://localhost:3000/contacts/63c6ca0205781e02d74bf88e
+Content-Type: application/json
+
+{"name": "Jackson"}
+###
+DELETE http://localhost:3000/contacts/63c6ca0205781e02d74bf88e
+

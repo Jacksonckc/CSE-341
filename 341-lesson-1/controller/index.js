@@ -67,7 +67,6 @@ const getContactById = async (req, res) => {
 
 const createNewContact = async (req, res) => {
   const result = await mongodb.getDb().db('contacts').collection('contact1').insertOne(req.body);
-
   res.json(result);
 };
 
