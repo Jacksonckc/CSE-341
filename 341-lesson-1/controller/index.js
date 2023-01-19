@@ -61,13 +61,12 @@ const getContactById = async (req, res) => {
     .db('contacts')
     .collection('contact1')
     .findOne({ _id: ObjectID(req.params.id) });
-
   res.json(result);
 };
 
 const createNewContact = async (req, res) => {
   const result = await mongodb.getDb().db('contacts').collection('contact1').insertOne(req.body);
-  res.json(result);
+  result ? res.status(201).json(result) : res.status(404);
 };
 
 const updateContact = async (req, res) => {
@@ -76,18 +75,21 @@ const updateContact = async (req, res) => {
     .db('contacts')
     .collection('contact1')
     .updateOne({ _id: ObjectID(req.params.id) }, { $set: req.body });
-
-  res.json(result);
+  result ? res.sendStatus(204) : res.sendStatus(404);
 };
 
 const removeContact = async (req, res) => {
-  const result = await mongodb
-    .getDb()
-    .db('contacts')
-    .collection('contact1')
-    .deleteOne({ _id: ObjectID(req.params.id) });
-
-  res.json(result);
+  try {
+    await mongodb
+      .getDb()
+      .db('contacts')
+      .collection('contact1')
+      .deleteOne({ _id: ObjectID(req.params.id) });
+    res.sendStatus(204);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(404);
+  }
 };
 
 module.exports = {
