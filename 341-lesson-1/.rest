@@ -7,10 +7,10 @@ Content-Type: application/json
 
 { "name" : "new" }
 ###
-PUT http://localhost:3000/contacts/63c6ca0205781e02d74bf88e
+PUT http://localhost:3000/contacts/63cb512db5918db0e7bf9d96
 Content-Type: application/json
 
 {"name": "updated"}
 ###
-DELETE http://localhost:3000/contacts/63c6ca0205781e02d74bf88e
+DELETE http://localhost:3000/contacts/63cb512db5918db0e7bf9d96
 
