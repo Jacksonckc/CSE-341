@@ -1,26 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongodb = require('./db/connection');
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
 var cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+
+const mongodb = require('./db/connection');
+const swaggerDocs = require('./swagger.json');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const swaggerOptions = {
-  swaggerDefinition: {
-    info: {
-      title: 'Contacts API',
-      description: 'Contacts API information',
-      contact: {
-        name: 'Jackson'
-      },
-      servers: ['http://localhost:3000']
-    }
-  },
-  apis: ['server.js', './routes/*.js']
-};
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 app.use(express.json());
 app.use(cors());
