@@ -3,18 +3,24 @@ import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
+import mongodb from './db/connection';
+import routes from './routes/';
+
 dotenv.config();
 
-const port = process.env.PORT || 3000;
+const port: string = process.env.PORT || '3000';
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/', (req, res) => {
-  res.send('what is up!');
-});
+app.use('/', routes);
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+mongodb.initDb((err: string) => {
+  if (err) {
+    console.log(err);
+  } else {
+    app.listen(port);
+    console.log(`Server is running on port ${port}`);
+  }
 });
