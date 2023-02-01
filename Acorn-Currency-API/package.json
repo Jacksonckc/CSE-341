@@ -2,10 +2,11 @@
   "name": "acorn-currency-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "index.mts",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.ts",
+    "start": "ts-node index.ts",
     "swagger": "ts-node ./swagger.ts"
   },
   "author": "",
