@@ -3,21 +3,25 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
-// const Database = require('./src/db/database');
+const mongodb = require('./src/db/connection');
 
-dotenv.config();
-// const db = new Database();
-
-const port = process.env.PORT || '8080';
+const port = process.env.PORT || 3000;
 const app = express();
 
+// Middleware
+dotenv.config();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+// Root path
+app.use('/', require('./src/routes'));
 
-app.listen('8080', (e) => {
-  e ? console.log(e) : console.log(`The server is running on port: ${port}.`);
+// Connect to mongo
+mongodb.initDb((err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    app.listen(port);
+    console.log(`Server is running on port ${port}`);
+  }
 });
