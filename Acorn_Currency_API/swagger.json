@@ -5,10 +5,10 @@
     "description": "Backend API for Acorn Currency Project App",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "acorn-currency.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/project/": {

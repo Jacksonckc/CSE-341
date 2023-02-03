@@ -5,8 +5,8 @@ const doc = {
     title: 'Acorn Currency',
     description: 'Backend API for Acorn Currency Project App'
   },
-  host: 'localhost:3000',
-  schemes: ['http'],
+  host: 'acorn-currency.onrender.com',
+  schemes: ['https'],
   definitions: {
     User: {
       $userFirstName: 'New',
