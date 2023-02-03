@@ -28,7 +28,11 @@ const getDb = () => {
   return _db;
 };
 
+const closeDb = () => {
+  _db.close();
+};
 module.exports = {
   initDb,
   getDb
+  // closeDb
 };

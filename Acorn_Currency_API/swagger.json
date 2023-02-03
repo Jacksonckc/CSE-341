@@ -11,45 +11,10 @@
     "http"
   ],
   "paths": {
-    "/project/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      }
-    },
     "/project/": {
-      "post": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/user/{id}": {
       "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
+        "description": "Get all the project information",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -58,12 +23,20 @@
             "description": "Not Found"
           }
         }
-      }
-    },
-    "/user/": {
+      },
       "post": {
-        "description": "",
-        "parameters": [],
+        "description": "Create a new project",
+        "parameters": [
+          {
+            "name": "Project Info",
+            "in": "body",
+            "required": true,
+            "description": "All necessary data to create a new project",
+            "schema": {
+              "$ref": "#/definitions/Project"
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -73,6 +46,263 @@
           }
         }
       }
+    },
+    "/project/{id}": {
+      "get": {
+        "description": "Get a specific the project information by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "description": "Modify a project",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Project Info",
+            "in": "body",
+            "required": true,
+            "description": "Please only input what needs to be changed, if you leave the default value, they will be updated to the DB",
+            "schema": {
+              "$ref": "#/definitions/Project"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "description": "Delete project information",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user/": {
+      "get": {
+        "description": "Get all the user information",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "description": "Create a new user",
+        "parameters": [
+          {
+            "name": "User Info",
+            "in": "body",
+            "required": true,
+            "description": "All necessary data to create a new user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "description": "Get a specific the user information by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "description": "Modify a user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "User Info",
+            "in": "body",
+            "required": true,
+            "description": "Please only input what needs to be changed, if you leave the default value, they will be updated to the DB",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "description": "Delete user information",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "userFirstName": {
+          "type": "string",
+          "example": "New"
+        },
+        "userLastName": {
+          "type": "string",
+          "example": "User"
+        },
+        "userEmail": {
+          "type": "string",
+          "example": "example@email.com"
+        },
+        "userPhone": {
+          "type": "string",
+          "example": "9997776666"
+        },
+        "userProjectCount": {
+          "type": "number",
+          "example": 0
+        },
+        "userStory": {
+          "type": "string",
+          "example": "I am a great developer!"
+        },
+        "userAvatar": {
+          "type": "string",
+          "example": "An img supposingly"
+        }
+      },
+      "required": [
+        "userFirstName",
+        "userEmail",
+        "userProjectCount"
+      ]
+    },
+    "Project": {
+      "type": "object",
+      "properties": {
+        "projectName": {
+          "type": "string",
+          "example": "Acorn Currency"
+        },
+        "projectLink": {
+          "type": "string",
+          "example": "acorn-currency@github.com"
+        },
+        "projectAutherId": {
+          "type": "string",
+          "example": "ObjectId"
+        },
+        "projectLikesCount": {
+          "type": "number",
+          "example": 0
+        },
+        "projectStartDate": {
+          "type": "object",
+          "properties": {}
+        },
+        "projectDescription": {
+          "type": "string",
+          "example": "This is a new project:>"
+        }
+      },
+      "required": [
+        "projectName",
+        "projectLink",
+        "projectAutherId",
+        "projectLikesCount",
+        "projectStartDate",
+        "projectDescription"
+      ]
+    },
+    "Skills": {
+      "type": "object",
+      "properties": {
+        "skillName": {
+          "type": "string",
+          "example": "Javascript"
+        },
+        "skillLevel": {
+          "type": "string",
+          "example": "Enum"
+        },
+        "skillDescription": {
+          "type": "string",
+          "example": "Javascript is awesome!"
+        }
+      },
+      "required": [
+        "skillName",
+        "skillLevel",
+        "skillDescription"
+      ]
     }
   }
 }
