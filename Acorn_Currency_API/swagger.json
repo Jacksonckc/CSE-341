@@ -5,10 +5,10 @@
     "description": "Backend API for Acorn Currency Project App",
     "version": "1.0.0"
   },
-  "host": "acorn-currency.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/project/": {
@@ -90,6 +90,103 @@
       },
       "delete": {
         "description": "Delete project information",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/skill/": {
+      "get": {
+        "description": "Get all the skill information",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "description": "Create a new user",
+        "parameters": [
+          {
+            "name": "Skill Info",
+            "in": "body",
+            "required": true,
+            "description": "All necessary data to create a new skill",
+            "schema": {
+              "$ref": "#/definitions/Skill"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/skill/{id}": {
+      "get": {
+        "description": "Get a specific the skill information by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "description": "Modify a user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Skill Info",
+            "in": "body",
+            "required": true,
+            "description": "Please only input what needs to be changed, if you leave the default value, they will be updated to the DB",
+            "schema": {
+              "$ref": "#/definitions/Skill"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "description": "Delete skill information",
         "parameters": [
           {
             "name": "id",
@@ -204,6 +301,51 @@
           }
         }
       }
+    },
+    "/user/{id}/userSkill": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user/userSkill": {
+      "post": {
+        "description": "Create a new user",
+        "parameters": [
+          {
+            "name": "UserSkill Info",
+            "in": "body",
+            "required": true,
+            "description": "All necessary data to create a new skill",
+            "schema": {
+              "$ref": "#/definitions/UserSkills"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -212,31 +354,31 @@
       "properties": {
         "userFirstName": {
           "type": "string",
-          "example": "New"
+          "example": "Alize"
         },
         "userLastName": {
           "type": "string",
-          "example": "User"
+          "example": "Thompson"
         },
         "userEmail": {
           "type": "string",
-          "example": "example@email.com"
+          "example": "Graham_Jeremy@yahoo.com"
         },
         "userPhone": {
           "type": "string",
-          "example": "9997776666"
+          "example": "321-112-7522"
         },
         "userProjectCount": {
           "type": "number",
-          "example": 0
+          "example": 6
         },
         "userStory": {
           "type": "string",
-          "example": "I am a great developer!"
+          "example": "Eum qui distinctio quae non aut ex. Distinctio at facilis."
         },
         "userAvatar": {
           "type": "string",
-          "example": "An img supposingly"
+          "example": "Sapiente voluptas rerum fugit ut hic minus."
         }
       },
       "required": [
@@ -250,27 +392,31 @@
       "properties": {
         "projectName": {
           "type": "string",
-          "example": "Acorn Currency"
+          "example": "Dolor in fuga."
         },
         "projectLink": {
           "type": "string",
-          "example": "acorn-currency@github.com"
+          "example": "Hessel_Price@Brianne.tv"
         },
         "projectAutherId": {
           "type": "string",
-          "example": "ObjectId"
+          "example": "e1861da5-8eb7-49f8-b274-363b35fceb6c"
         },
         "projectLikesCount": {
           "type": "number",
-          "example": 0
+          "example": 76
         },
         "projectStartDate": {
-          "type": "object",
-          "properties": {}
+          "type": "string",
+          "example": "1991-11-20"
         },
         "projectDescription": {
           "type": "string",
-          "example": "This is a new project:>"
+          "example": "Consequuntur consequatur itaque sed commodi. Veritatis amet illo eaque at rem tempore quia consequatur. Et voluptatum veniam qui recusandae ipsa recusandae facere reprehenderit. Esse non ea quisquam."
+        },
+        "isProjectFinished": {
+          "type": "boolean",
+          "example": true
         }
       },
       "required": [
@@ -279,29 +425,64 @@
         "projectAutherId",
         "projectLikesCount",
         "projectStartDate",
-        "projectDescription"
+        "projectDescription",
+        "isProjectFinished"
       ]
     },
-    "Skills": {
+    "Skill": {
       "type": "object",
       "properties": {
         "skillName": {
           "type": "string",
-          "example": "Javascript"
+          "example": "en"
         },
         "skillLevel": {
-          "type": "string",
-          "example": "Enum"
+          "type": "number",
+          "example": 1
         },
         "skillDescription": {
           "type": "string",
-          "example": "Javascript is awesome!"
+          "example": "Sit fuga quod minus ut."
         }
       },
       "required": [
         "skillName",
         "skillLevel",
         "skillDescription"
+      ]
+    },
+    "ProjectLiks": {
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string",
+          "example": "3ef912b4-bb65-44ef-820c-097f75eec6e3"
+        },
+        "userId": {
+          "type": "string",
+          "example": "2cf24b70-4f99-4dd0-95f3-e25a24e31062"
+        }
+      },
+      "required": [
+        "projectId",
+        "userId"
+      ]
+    },
+    "UserSkills": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "fb652c90-675e-450d-8e74-28b2405f6139"
+        },
+        "skillId": {
+          "type": "string",
+          "example": "0379c0ca-0d4b-458f-82c2-1d949d01b6e3"
+        }
+      },
+      "required": [
+        "userId",
+        "skillId"
       ]
     }
   }

@@ -1,5 +1,4 @@
 const casual = require('casual');
-// const setTimeout = require('timers/promises');
 const mongodb = require('../db/connection');
 
 const seedDb = async () => {
@@ -15,12 +14,26 @@ const seedDb = async () => {
   setTimeout(async () => {
     try {
       await mongodb.getDb().db('acorn_currency').collection('users').deleteMany();
+      await mongodb.getDb().db('acorn_currency').collection('projects').deleteMany();
+      await mongodb.getDb().db('acorn_currency').collection('skills').deleteMany();
       await mongodb
         .getDb()
         .db('acorn_currency')
         .collection('users')
         .insertMany(createUserMockData());
       console.log('Users created');
+      await mongodb
+        .getDb()
+        .db('acorn_currency')
+        .collection('projects')
+        .insertMany(createProjectMockData());
+      console.log('Projects created');
+      await mongodb
+        .getDb()
+        .db('acorn_currency')
+        .collection('skills')
+        .insertMany(createSkillMockData());
+      console.log('Skills created');
     } catch (e) {
       console.log(e);
     }
@@ -46,17 +59,32 @@ const createUserMockData = () => {
 
 const createProjectMockData = () => {
   let projectArray = [];
+
   for (let i = 0; i < 10; i++) {
     projectArray.push({
       projectName: casual.title,
       projectLink: casual.url,
-      projectAutherId: casual,
+      projectAutherId: casual.uuid,
       projectLikesCount: 0,
-      projectStartDate: new Date(),
-      projectDescription: 'This is a new project:>'
+      projectStartDate: casual.date,
+      projectDescription: casual.description,
+      $isProjectFinished: casual.boolean
     });
   }
   return projectArray;
+};
+
+const createSkillMockData = () => {
+  let skillArray = [];
+
+  for (let i = 0; i < 10; i++) {
+    skillArray.push({
+      skillName: casual.last_name,
+      skillLevel: casual.letter,
+      skillDescription: casual.description
+    });
+  }
+  return skillArray;
 };
 
 seedDb();

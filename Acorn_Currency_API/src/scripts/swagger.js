@@ -1,3 +1,4 @@
+const casual = require('casual');
 const swaggerAutogen = require('swagger-autogen');
 
 const doc = {
@@ -5,30 +6,39 @@ const doc = {
     title: 'Acorn Currency',
     description: 'Backend API for Acorn Currency Project App'
   },
-  host: 'acorn-currency.onrender.com',
-  schemes: ['https'],
+  host: 'localhost:3000',
+  schemes: ['http'],
   definitions: {
     User: {
-      $userFirstName: 'New',
-      userLastName: 'User',
-      $userEmail: 'example@email.com',
-      userPhone: '9997776666',
-      $userProjectCount: 0,
-      userStory: 'I am a great developer!',
-      userAvatar: 'An img supposingly'
+      $userFirstName: casual.first_name,
+      userLastName: casual.last_name,
+      $userEmail: casual.email,
+      userPhone: casual.phone,
+      $userProjectCount: Math.floor(casual.random * 10),
+      userStory: casual.description,
+      userAvatar: casual.short_description
     },
     Project: {
-      $projectName: 'Acorn Currency',
-      $projectLink: 'acorn-currency@github.com',
-      $projectAutherId: 'ObjectId',
-      $projectLikesCount: 0,
-      $projectStartDate: new Date(),
-      $projectDescription: 'This is a new project:>'
+      $projectName: casual.short_description,
+      $projectLink: casual.email,
+      $projectAutherId: casual.uuid,
+      $projectLikesCount: Math.floor(casual.random * 100),
+      $projectStartDate: casual.date(),
+      $projectDescription: casual.description,
+      $isProjectFinished: casual.boolean
     },
-    Skills: {
-      $skillName: 'Javascript',
-      $skillLevel: 'Enum',
-      $skillDescription: 'Javascript is awesome!'
+    Skill: {
+      $skillName: casual.language_code,
+      $skillLevel: Math.floor(casual.random * 5),
+      $skillDescription: casual.short_description
+    },
+    ProjectLiks: {
+      $projectId: casual.uuid,
+      $userId: casual.uuid
+    },
+    UserSkills: {
+      $userId: casual.uuid,
+      $skillId: casual.uuid
     }
   }
 };
