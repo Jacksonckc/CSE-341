@@ -2,7 +2,7 @@ const { ObjectID } = require('bson');
 const mongodb = require('../db/connection');
 const fetch = require('node-fetch-commonjs');
 
-const getAllUserSkills = async (req, res) => {
+const getAllUserSkillsByUserId = async (req, res) => {
   var result;
   try {
     result = await mongodb
@@ -16,9 +16,11 @@ const getAllUserSkills = async (req, res) => {
     var skillArray = [];
     result
       ? result.toArray().then(async (lists) => {
+          console.log(lists);
           for (let item of lists) {
             const response = await fetch(`${process.env.ENV}/skill/${item.skillId}`);
-            const skillInfo = await response.json();
+            let skillInfo = await response.json();
+            skillInfo = { userSkillId: item._id, ...skillInfo };
             response && skillArray.push(skillInfo);
           }
           res.status(200).json(skillArray);
@@ -29,13 +31,13 @@ const getAllUserSkills = async (req, res) => {
 
 const addUserSkill = async (req, res) => {
   /* 
-    #swagger.description = 'Create a new user' 
+    #swagger.description = 'Create a new userSkill' 
     #swagger.parameters['UserSkill Info'] = {
       in: 'body',
       type: 'object',
       required: true,
-      description: 'All necessary data to create a new skill',
-      schema: { $ref: '#/definitions/UserSkills' }
+      description: 'All necessary data to create a new userSkill',
+      schema: { $ref: '#/definitions/UserSkill' }
     } */
   var result;
   try {
@@ -51,4 +53,20 @@ const addUserSkill = async (req, res) => {
   }
 };
 
-module.exports = { getAllUserSkills, addUserSkill };
+const deleteUserSkill = async (req, res) => {
+  // #swagger.description = 'Delete userSkill information'
+  var result;
+  try {
+    result = await mongodb
+      .getDb()
+      .db('acorn_currency')
+      .collection('user_skills')
+      .deleteOne({ _id: ObjectID(req.params.id) });
+    res.sendStatus(204);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(404);
+  }
+};
+
+module.exports = { getAllUserSkillsByUserId, addUserSkill, deleteUserSkill };

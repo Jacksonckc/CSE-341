@@ -88,10 +88,10 @@ const deleteProject = async (req, res) => {
       .db('acorn_currency')
       .collection('projects')
       .deleteOne({ _id: ObjectID(req.params.id) });
+    res.sendStatus(204);
   } catch (e) {
     console.log(e);
-  } finally {
-    result ? res.sendStatus(204) : res.sendStatus(404);
+    res.sendStatus(404);
   }
 };
 

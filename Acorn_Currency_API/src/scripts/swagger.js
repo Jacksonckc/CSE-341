@@ -32,11 +32,11 @@ const doc = {
       $skillLevel: Math.floor(casual.random * 5),
       $skillDescription: casual.short_description
     },
-    ProjectLiks: {
+    ProjectLike: {
       $projectId: casual.uuid,
       $userId: casual.uuid
     },
-    UserSkills: {
+    UserSkill: {
       $userId: casual.uuid,
       $skillId: casual.uuid
     }

@@ -15,7 +15,18 @@ const {
 } = require('./skillControllers');
 
 const { getUsers, getUser, addUser, changeUserInfo, deleteUser } = require('./userControllers');
-const { getAllUserSkills, addUserSkill } = require('./userSkillControllers');
+
+const {
+  getAllUserSkillsByUserId,
+  addUserSkill,
+  deleteUserSkill
+} = require('./userSkillControllers');
+
+const {
+  getAllProjectLikesByUserId,
+  addProjectLike,
+  deleteProjectLike
+} = require('./projectLikeControllers');
 
 module.exports = {
   getProjects,
@@ -33,6 +44,10 @@ module.exports = {
   addUser,
   changeUserInfo,
   deleteUser,
-  getAllUserSkills,
-  addUserSkill
+  getAllUserSkillsByUserId,
+  addUserSkill,
+  deleteUserSkill,
+  getAllProjectLikesByUserId,
+  addProjectLike,
+  deleteProjectLike
 };

@@ -325,21 +325,108 @@
     },
     "/user/userSkill": {
       "post": {
-        "description": "Create a new user",
+        "description": "Create a new userSkill",
         "parameters": [
           {
             "name": "UserSkill Info",
             "in": "body",
             "required": true,
-            "description": "All necessary data to create a new skill",
+            "description": "All necessary data to create a new userSkill",
             "schema": {
-              "$ref": "#/definitions/UserSkills"
+              "$ref": "#/definitions/UserSkill"
             }
           }
         ],
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user/userSkill/{id}": {
+      "delete": {
+        "description": "Delete userSkill information",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user/{id}/projectLike": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user/projectLike": {
+      "post": {
+        "description": "Likes a project",
+        "parameters": [
+          {
+            "name": "ProjectLikes Info",
+            "in": "body",
+            "required": true,
+            "description": "All necessary data to create a new projectLike",
+            "schema": {
+              "$ref": "#/definitions/ProjectLike"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/user/projectLike/{id}": {
+      "delete": {
+        "description": "Delete projectLike information",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
           },
           "404": {
             "description": "Not Found"
@@ -354,31 +441,31 @@
       "properties": {
         "userFirstName": {
           "type": "string",
-          "example": "Alize"
+          "example": "Rosario"
         },
         "userLastName": {
           "type": "string",
-          "example": "Thompson"
+          "example": "Fisher"
         },
         "userEmail": {
           "type": "string",
-          "example": "Graham_Jeremy@yahoo.com"
+          "example": "Wunsch_Jayme@hotmail.com"
         },
         "userPhone": {
           "type": "string",
-          "example": "321-112-7522"
+          "example": "639-914-0919"
         },
         "userProjectCount": {
           "type": "number",
-          "example": 6
+          "example": 4
         },
         "userStory": {
           "type": "string",
-          "example": "Eum qui distinctio quae non aut ex. Distinctio at facilis."
+          "example": "Iure iste molestiae aut asperiores nisi vel ex perspiciatis. Accusamus ut quod aspernatur sint consectetur. Ullam ut est dolores et deleniti et sit repellat eligendi."
         },
         "userAvatar": {
           "type": "string",
-          "example": "Sapiente voluptas rerum fugit ut hic minus."
+          "example": "Cum aut commodi quasi ea suscipit dolorem."
         }
       },
       "required": [
@@ -392,31 +479,31 @@
       "properties": {
         "projectName": {
           "type": "string",
-          "example": "Dolor in fuga."
+          "example": "Voluptatum ipsa aut impedit."
         },
         "projectLink": {
           "type": "string",
-          "example": "Hessel_Price@Brianne.tv"
+          "example": "Pansy_Yundt@yahoo.com"
         },
         "projectAutherId": {
           "type": "string",
-          "example": "e1861da5-8eb7-49f8-b274-363b35fceb6c"
+          "example": "957c37ce-f46f-439c-8c71-d20f5e1d37d5"
         },
         "projectLikesCount": {
           "type": "number",
-          "example": 76
+          "example": 32
         },
         "projectStartDate": {
           "type": "string",
-          "example": "1991-11-20"
+          "example": "2000-02-06"
         },
         "projectDescription": {
           "type": "string",
-          "example": "Consequuntur consequatur itaque sed commodi. Veritatis amet illo eaque at rem tempore quia consequatur. Et voluptatum veniam qui recusandae ipsa recusandae facere reprehenderit. Esse non ea quisquam."
+          "example": "Architecto nostrum cum dolorum aut eius ut recusandae veniam corporis. Eum ipsam nobis expedita et deserunt illo explicabo."
         },
         "isProjectFinished": {
           "type": "boolean",
-          "example": true
+          "example": false
         }
       },
       "required": [
@@ -434,15 +521,15 @@
       "properties": {
         "skillName": {
           "type": "string",
-          "example": "en"
+          "example": "es"
         },
         "skillLevel": {
           "type": "number",
-          "example": 1
+          "example": 4
         },
         "skillDescription": {
           "type": "string",
-          "example": "Sit fuga quod minus ut."
+          "example": "Recusandae excepturi qui voluptatem quia doloremque ad."
         }
       },
       "required": [
@@ -451,16 +538,16 @@
         "skillDescription"
       ]
     },
-    "ProjectLiks": {
+    "ProjectLike": {
       "type": "object",
       "properties": {
         "projectId": {
           "type": "string",
-          "example": "3ef912b4-bb65-44ef-820c-097f75eec6e3"
+          "example": "50c13c97-af26-45af-9daa-f9e60a9c4d81"
         },
         "userId": {
           "type": "string",
-          "example": "2cf24b70-4f99-4dd0-95f3-e25a24e31062"
+          "example": "7f60d0dd-d25c-496a-bb7e-3f929ad9d21d"
         }
       },
       "required": [
@@ -468,16 +555,16 @@
         "userId"
       ]
     },
-    "UserSkills": {
+    "UserSkill": {
       "type": "object",
       "properties": {
         "userId": {
           "type": "string",
-          "example": "fb652c90-675e-450d-8e74-28b2405f6139"
+          "example": "9ca4653a-3b4a-4dcb-82f1-c3bbd090a324"
         },
         "skillId": {
           "type": "string",
-          "example": "0379c0ca-0d4b-458f-82c2-1d949d01b6e3"
+          "example": "97ca535b-1e95-4fd1-b48f-5bce7330f5f2"
         }
       },
       "required": [
